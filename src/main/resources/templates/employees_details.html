@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Employee Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Employee Management System</a>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/employees}">Employee List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/employees/new}">Add New Employee</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/employees/search}">Search Employees</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <h1 class="text-center"> Employee Details </h1>
+            <br>
+            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <div th:if="${employee != null}" class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center" th:text="${employee.firstName + ' ' + employee.lastName}"></h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Employee ID:</strong> <span th:text="${employee.id}"></span></li>
+                        <li class="list-group-item"><strong>Login ID:</strong> <span th:text="${employee.loginId}"></span></li>
+                        <li class="list-group-item"><strong>First Name:</strong> <span th:text="${employee.firstName}"></span></li>
+                        <li class="list-group-item"><strong>Middle Name:</strong> <span th:text="${employee.middleName} ?: 'N/A'"></span></li>
+                        <li class="list-group-item"><strong>Last Name:</strong> <span th:text="${employee.lastName}"></span></li>
+                        <li class="list-group-item"><strong>Date of Birth:</strong> <span th:text="${#temporals.format(employee.dateOfBirth, 'dd-MMM-yyyy')}"></span></li>
+                        <li class="list-group-item"><strong>Department:</strong> <span th:text="${employee.department}"></span></li>
+                        <li class="list-group-item"><strong>Salary:</strong> <span th:text="${#numbers.formatCurrency(employee.salary)}"></span></li>
+                        <li class="list-group-item"><strong>Permanent Address:</strong> <span th:text="${employee.permanentAddress}"></span></li>
+                        <li class="list-group-item"><strong>Current Address:</strong> <span th:text="${employee.currentAddress}"></span></li>
+                        <li class="list-group-item">
+                            <strong>ID Proof:</strong>
+                            <a th:if="${employee.idProofPath != null}" th:href="@{/employees/idproof/{id}(id=${employee.id})}" target="_blank" class="btn btn-link btn-sm">View ID Proof</a>
+                            <span th:unless="${employee.idProofPath != null}">No ID proof uploaded.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer text-center">
+                    <a th:href="@{/employees/edit/{id}(id=${employee.id})}" class="btn btn-primary mr-2">Edit Employee</a>
+                    <form th:action="@{/employees/delete/{id}(id=${employee.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger mr-2">Delete Employee</button>
+                    </form>
+                    <a th:href="@{/employees}" class="btn btn-secondary">Back to Employee List</a>
+                </div>
+            </div>
+            <div th:unless="${employee != null}" class="alert alert-warning text-center">
+                <p>Employee not found.</p>
+                <a th:href="@{/employees}" class="btn btn-secondary">Back to Employee List</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
