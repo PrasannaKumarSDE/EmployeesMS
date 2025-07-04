@@ -73,3 +73,9 @@ Jakarta Bean Validation (JSR 303): For server-side form validation.
 Apache Commons Lang3 / Spring StringUtils: For utility string operations.
 
 Bootstrap 4: Frontend framework for responsive and modern UI design.
+
+
+Author:
+Prasanna Kumar Kanakala
+📧 Email: kanakalaprasannakumar@gmail.com
+🔗 LinkedIn:https://tinyurl.com/52bv4c5v
